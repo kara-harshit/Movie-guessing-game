@@ -2,13 +2,46 @@ const movieTitle=document.getElementById("movie_title");
 const alphaInput=document.getElementById("alpha_input");
 const button=document.getElementById("button");
 const score=document.getElementById("score");
+const timeblock=document.getElementById("time_block");
+const mainContainer=document.getElementById("main_container");
 
+
+let check=true;
+let timevar;
+function Updatetime(){  
+    let fixTime=60;
+    if(check)
+    {
+        clearInterval(timevar);
+    }
+    timevar=setInterval(()=>{
+       
+        if(fixTime>=0)
+        {
+            timeblock.innerHTML=`TIMER : ${fixTime}`;
+            fixTime--;
+        }else{
+            clearInterval(timevar);
+            mainContainer.innerHTML="";
+            setTimeout(()=>{
+                mainContainer.innerHTML=`<p>${movieName}</p>`;
+            },2000)
+            // let response=confirm("WANT TO RESTART GAME");
+            // if(response){
+            //     startGame();
+            // }else{
+            //     alert("Okay Bye")
+            // }
+        }
+    },1000);
+   
+}
 
 window.onload=function () {
     alphaInput.focus();
+    fillMovieName();
+    Updatetime();
 }
-
-
 
 let demoArray=["kabir singh","arjun reddy","ram lakhan","tere ishq mein","Pathaan","Baahubali 2 The Conclusion","KGF Chapter 2",
 "Shivaay",	 
@@ -91,7 +124,6 @@ function fillMovieName()
     }else{
         fillMovieName();
     }
-    console.log(clutter);
 }
 
 function fillCharacter(alpha,movie){
@@ -99,7 +131,6 @@ function fillCharacter(alpha,movie){
     
     for(let i=0;i<movie.length;i++)
     {
-        console.log(indexofBlank);
         if(movie[i]===" ")
         {
             newclutter+=` <li>-</li>`
@@ -124,7 +155,17 @@ function fillCharacter(alpha,movie){
         }
     }
     movieTitle.innerHTML="";
+   
     movieTitle.innerHTML=newclutter;
+    if(!newclutter.includes("#")){
+        movieTitle.innerHTML="you won!";
+        setTimeout(()=>{
+            fillMovieName();
+            check=true;
+            Updatetime();
+        },1000)
+    }
+    
 
 }
 let chances=5;
@@ -134,6 +175,11 @@ function updateChances()
     if(chances===0)
     {
         movieTitle.innerHTML=`<p>${movieName}</p>`;
+        setTimeout(()=>{
+            fillMovieName();
+            check=true;
+            Updatetime();
+        },1500)
         
     }
 
@@ -165,4 +211,3 @@ alphaInput.addEventListener("keypress",()=>{
     }
 })
 
-fillMovieName();

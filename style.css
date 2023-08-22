@@ -10,13 +10,14 @@ html, body{
     font-weight: 500;
     background-color: rgb(205, 202, 193);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 li{
     list-style: none;
 }
-main{
+#main_container{
     background-color: hsl(182, 18%, 42%);
     width: 50vmax;
     height: 50vh;
@@ -31,7 +32,6 @@ main{
 .movie_title{
     display: flex;
 }
-
 ul{
     width: 40vmax;
     height: 10vmax;
